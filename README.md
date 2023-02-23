@@ -1,1 +1,1 @@
-# Systemy Operacyjne
+# Programowanie w języku Python 
