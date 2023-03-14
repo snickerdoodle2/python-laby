@@ -1,5 +1,5 @@
 # Programowanie w języku Python 
-
+[Link do repo](https://github.com/hrbio/python-laby)
 ## Kontakt
 `zkaleta@agh.edu.pl`
 
