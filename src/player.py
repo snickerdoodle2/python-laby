@@ -9,6 +9,9 @@ class Player(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect(topleft = pos)
 		# TO UPDATE ^^^^
 
+		self.gravity = 8
+		self.movement_speed = 600
+		self.falling_speed = 100
 		self.direction = pygame.Vector2()
 
 	def get_input(self) -> None:
@@ -20,6 +23,14 @@ class Player(pygame.sprite.Sprite):
 		else:
 			self.direction.x = 0
 
-	def update(self) -> None:
+	def handle_gravity(self) -> None:
+		if pygame.key.get_pressed()[pygame.K_SPACE]:
+			self.direction.y = -10
+		else:
+			self.direction.y += .2
+
+	def update(self, dt) -> None:
 		self.get_input()
-		self.rect.x += self.direction.x	
+		self.handle_gravity()
+		self.rect.x += self.direction.x	* self.movement_speed * dt
+		self.rect.y += self.direction.y * self.falling_speed * dt

@@ -19,10 +19,10 @@ class Level:
 		self.floor_group.add(floor)
 # TO REMOVE ^^^^
 
-	def run(self) -> None:
+	def run(self, dt) -> None:
 		self.display_surface.fill('black')
 
 		self.floor_group.draw(self.display_surface)
 
-		self.player.update()
+		self.player.update(dt)
 		self.player.draw(self.display_surface)
