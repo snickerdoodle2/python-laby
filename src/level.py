@@ -20,5 +20,9 @@ class Level:
 # TO REMOVE ^^^^
 
 	def run(self) -> None:
+		self.display_surface.fill('black')
+
 		self.floor_group.draw(self.display_surface)
+
+		self.player.update()
 		self.player.draw(self.display_surface)
