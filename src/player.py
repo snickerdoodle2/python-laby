@@ -30,5 +30,3 @@ class Player(pygame.sprite.Sprite):
 
 	def update(self, dt) -> None:
 		self.get_input()
-		self.rect.x += self.direction.x	* self.movement_speed * dt
-		self.rect.y += self.direction.y * self.falling_speed * dt
