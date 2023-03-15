@@ -7,11 +7,9 @@ class Player(pygame.sprite.Sprite):
 		self.image = pygame.Surface((64, 64))
 		self.image.fill('red')
 		self.rect = self.image.get_rect(topleft = pos)
+		self.can_jump = True
 		# TO UPDATE ^^^^
-
-		self.gravity = 8
 		self.movement_speed = 600
-		self.falling_speed = 100
 		self.direction = pygame.Vector2()
 
 	def get_input(self) -> None:
@@ -23,12 +21,11 @@ class Player(pygame.sprite.Sprite):
 		else:
 			self.direction.x = 0
 
-		if keys_state[pygame.K_SPACE]:
-			self.direction.y = -10
+		if keys_state[pygame.K_SPACE] and self.can_jump:
+			self.direction.y = -1600
+			self.can_jump = False
 		else:
-			self.direction.y += .2
+			self.direction.y += 25
 
-	def update(self, dt) -> None:
+	def update(self) -> None:
 		self.get_input()
-		self.rect.x += self.direction.x	* self.movement_speed * dt
-		self.rect.y += self.direction.y * self.falling_speed * dt
