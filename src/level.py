@@ -18,20 +18,11 @@ class Level:
 
 		obst = pygame.sprite.Sprite()
 		obst.image = pygame.Surface((100, 100))
-		obst.rect = obst.image.get_rect(topleft=(400, 100))
+		obst.rect = obst.image.get_rect(topleft=(400, 400))
 		obst.image.fill('gray')
 		self.blocks.add(obst)
+
 # TO REMOVE ^^^^
-
-	def run(self, dt) -> None:
-		self.display_surface.fill('black')
-
-		self.blocks.draw(self.display_surface)
-
-		self.player.update(dt)
-		self.handle_horizontal_collision(dt)
-		self.handle_vertical_collision(dt)
-		self.player.draw(self.display_surface)
 
 	def handle_horizontal_collision(self, dt):
 		player = self.player.sprite
@@ -45,12 +36,24 @@ class Level:
 
 	def handle_vertical_collision(self, dt):
 		player = self.player.sprite
-		player.rect.y += player.direction.y * player.falling_speed * dt
+		player.rect.y += player.direction.y * dt
 		for block in self.blocks.sprites():
 			if block.rect.colliderect(player):
 				if player.direction.y > 0:
+					player.can_jump = True
 					player.rect.bottom = block.rect.top
 					player.direction.y = 0
 				elif player.direction.y < 0:
 					player.rect.top = block.rect.bottom
 					player.direction.y = 0
+
+
+	def run(self, dt) -> None:
+		self.display_surface.fill('black')
+
+		self.blocks.draw(self.display_surface)
+
+		self.player.update()
+		self.handle_horizontal_collision(dt)
+		self.handle_vertical_collision(dt)
+		self.player.draw(self.display_surface)
