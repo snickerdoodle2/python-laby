@@ -4,9 +4,11 @@ from level import Level
 class Game:
     def __init__(self) -> None:
         pygame.init()
-        self.screen = pygame.display.set_mode((1200, 700))
         self.clock = pygame.time.Clock()
+        # TODO: Change to settings file
+        self.screen = pygame.display.set_mode((1200, 700))
         pygame.display.set_caption('Mario')
+        
         self.level = Level(self.screen)
         self.level.setup()
 

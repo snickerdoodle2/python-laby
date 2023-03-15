@@ -9,10 +9,12 @@ class Player(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect(topleft = pos)
 		self.can_jump = True
 		# TO UPDATE ^^^^
+		# TODO: Settings file
 		self.movement_speed = 600
+		# vector storing where and how fast player wants to go
 		self.direction = pygame.Vector2()
 
-	def get_input(self) -> None:
+	def get_direction(self) -> None:
 		keys_state = pygame.key.get_pressed()
 		if keys_state[pygame.K_LEFT]:
 			self.direction.x = -1
@@ -28,4 +30,4 @@ class Player(pygame.sprite.Sprite):
 			self.direction.y += 25
 
 	def update(self) -> None:
-		self.get_input()
+		self.get_direction()
