@@ -1,4 +1,5 @@
 import pygame
+import config
 
 class Player(pygame.sprite.Sprite):
 	def __init__(self, pos) -> None:
@@ -10,7 +11,9 @@ class Player(pygame.sprite.Sprite):
 		self.can_jump = True
 		# TO UPDATE ^^^^
 		# TODO: Settings file
-		self.movement_speed = 600
+		self.movement_speed = config.PLAYER_MOVEMENT_SPEED
+		self.gravity = config.GRAVITY
+		self.jump_speed = config.PLAYER_JUMP_SPEED
 		# vector storing where and how fast player wants to go
 		self.direction = pygame.Vector2()
 
@@ -25,10 +28,10 @@ class Player(pygame.sprite.Sprite):
 			self.direction.x = 0
 
 		if keys_state[pygame.K_SPACE] and self.can_jump:
-			self.direction.y = -1600
+			self.direction.y = self.jump_speed
 			self.can_jump = False
 		else:
-			self.direction.y += 25
+			self.direction.y += self.gravity
 
 	def update(self) -> None:
 		self.get_direction()
