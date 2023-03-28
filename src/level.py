@@ -5,24 +5,11 @@ class Level:
 	def __init__(self, surface) -> None:
 		self.display_surface = surface
 
-	def setup(self) -> None:
+	def setup(self, levelData) -> None:
 		self.player = pygame.sprite.GroupSingle()
 		# Prepare lists for blocks 
 		self.blocks = pygame.sprite.Group()
-# TO REMOVE vvvv -- Only to debug
 		self.player.add(Player((300, 300)))
-		floor = pygame.sprite.Sprite()
-		floor.image = pygame.Surface((1200, 50))
-		floor.image.fill('gray')
-		floor.rect = floor.image.get_rect(topleft=(0, 650))
-		self.blocks.add(floor)
-
-		obst = pygame.sprite.Sprite()
-		obst.image = pygame.Surface((100, 100))
-		obst.rect = obst.image.get_rect(topleft=(400, 400))
-		obst.image.fill('gray')
-		self.blocks.add(obst)
-# TO REMOVE ^^^^
 
 
 	def handle_horizontal_collision(self, dt):
@@ -69,7 +56,7 @@ class Level:
 		# calculate where the player want to go
 		self.player.update()
 		# check colisions and set player's position
-		self.handle_horizontal_collision(dt)
-		self.handle_vertical_collision(dt)
+		# self.handle_horizontal_collision(dt)
+		# self.handle_vertical_collision(dt)
 		# draw the player
 		self.player.draw(self.display_surface)
