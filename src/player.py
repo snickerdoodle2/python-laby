@@ -14,6 +14,7 @@ class Player(pygame.sprite.Sprite):
 		# vector storing where and how fast player wants to go
 		self.direction = pygame.Vector2()
 
+# NIE WIEM CZEMU LOSOWO SKACZE WYZEJ STRZELAM ZE PRZEZ PROBLEMY Z FLOATEM :D
 	def get_direction(self) -> None:
 		keys_state = pygame.key.get_pressed()
 		if keys_state[pygame.K_LEFT]:
