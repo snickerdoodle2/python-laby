@@ -8,7 +8,6 @@ class Block(pygame.sprite.Sprite):
         self.image.fill('green')
         self.rect = self.image.get_rect(topleft = position)
         
+    def update(self, x_dt) -> None:
+        self.rect.x += x_dt
         
-        
-        
-
