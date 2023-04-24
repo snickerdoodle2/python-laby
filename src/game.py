@@ -3,15 +3,29 @@ from level import Level
 import config
 
 class Game:
+    
+    level_map = [
+        '					       ',
+        '					       ',
+        '					       ',
+        ' XX    XX 		X	       ',
+        ' XX    XX 			       ',
+        ' XXX   XX			       ',
+        ' XXXX  XX			       ',
+        ' 					       ',
+        '  XXXXX       XXX         ',	
+        'XXXXXXXXXXXXXXXXXXXXXXXXXX']
+    
     def __init__(self) -> None:
         pygame.init()
         self.clock = pygame.time.Clock()
         # TODO: Change to settings file
+        
         self.screen = pygame.display.set_mode((config.DISPLAY_WIDTH, config.DISPLAY_HEIGHT))
         pygame.display.set_caption('Mario')
         
-        self.level = Level(self.screen)
-        self.level.setup()
+        self.level = Level(self.level_map, self.screen)
+        
 
     def run(self) -> None:
         while True:
@@ -24,3 +38,6 @@ class Game:
             self.level.run(dt)
 
             pygame.display.update()
+            
+            
+	
