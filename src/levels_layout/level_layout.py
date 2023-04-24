@@ -18,9 +18,9 @@ level_2= [
         'X         HH             H           H      H        H H HH H   H      ',
         'X         HH             H           H      H        H H HH H   H      ',
         'X         HH             H    C      H      H        H H HH H   H      ',
-        'X         HH                         H      H        H H HH H   H     F',
-        'X                 C                                                   F',
-        'X P XXXXX       XXX           H              C                        F',	
+        'X         HH                  C      H      H        H H HH H   H      F',
+        'X                 C           C                                  C     F',
+        'X P XXXXX       XXX           H              C      C    C             F',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 
@@ -30,8 +30,8 @@ level_3= [
         'X      H       H       H       H       H       H       H       H      H',
         'X              H               H               H               H      H',
         'X                                                                     H',
-        'X                                                                     H',
-        'X                                                                     H',
-        'X                                                                     X',
-        'X P                                                                   X',	
+        'X                      C                   C                          H',
+        'X                      C                   C                          H',
+        'X                      C           C       C                          X',
+        'X P          C                                   C          C   C     X',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']

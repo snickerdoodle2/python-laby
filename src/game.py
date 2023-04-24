@@ -15,7 +15,7 @@ class Game:
         pygame.display.set_caption('Mario')
         
         # choosing which level load
-        self.level_map = level_2
+        self.level_map = level_3
         self.level = Level(self.level_map, self.screen)
         
 

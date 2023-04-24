@@ -20,17 +20,23 @@ class Level:
         # Add blocks to self.blocks from level_data
         self.blocks = pygame.sprite.Group()
 
+        # Add flag
         self.flag = pygame.sprite.Group()
+        
+        # Add coins on map
+        self.coins = pygame.sprite.Group()
         
         for row_index, row in enumerate(level_layout_data):
             for col_index, cell in enumerate(row):
                 
                 x = col_index * BLOCK_SIZE
                 y = row_index * BLOCK_SIZE
+                
                 # add obstacle on map
                 if cell == 'H':
                     new_block = Block((x,y), BLOCK_SIZE, "black")
                     self.blocks.add(new_block)
+                
                 # add grass on map
                 elif cell == 'X':
                     new_block = Block((x,y), BLOCK_SIZE, "green")
@@ -38,13 +44,14 @@ class Level:
                 
                 # add coins on map
                 elif cell == 'C':
-                    new_block = Block((x,y), BLOCK_SIZE, "yellow")
-                    self.blocks.add(new_block) 
+                    new_coin = Coin((x,y), BLOCK_SIZE//1.5, 50)
+                    self.coins.add(new_coin)
                 
                 # add player on map
                 elif cell == 'P':
                     self.player.add(Player((x, y)))    
-
+                
+                # add flag on map
                 elif cell == 'F':
                     new_block = Block((x,y), BLOCK_SIZE, "pink")
                     self.flag.add(new_block)   
@@ -74,16 +81,21 @@ class Level:
         self.player.update()
               
         self.set_screen_movement()
-        # update blocks on screen
+        # move blocks, coins and flag on screen
         self.blocks.update(self.world_x_shift * dt)
+        self.coins.update(self.world_x_shift * dt)
         self.flag.update(self.world_x_shift * dt)
         
         # check colisions and set player's position
         self.handle_horizontal_collision(dt)
         self.handle_vertical_collision(dt)
         
+        # coin collecting
+        self.handle_coin_collision();
+        
         # draw all the blocks
         self.blocks.draw(self.display_surface)
+        self.coins.draw(self.display_surface)
         self.flag.draw(self.display_surface)
         
         # draw the player
@@ -93,9 +105,18 @@ class Level:
 
         if self.player.sprite.dead:
             self.status = 'dead'
+    
 
     
+    def handle_coin_collision(self):
+        player = self.player.sprite
+
+        for coin in self.coins.sprites():
+            if coin.rect.colliderect(player):
+                player.coins += coin.value
+                self.coins.remove(coin)
     
+
     def handle_horizontal_collision(self, dt):
         player = self.player.sprite
         # update player's position
