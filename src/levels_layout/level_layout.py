@@ -1,14 +1,14 @@
 level_1= [
-        'X                  H                                                   ',
-        'X                  H                                                   ',
-        'X   H              H                                                   ',
-        'X   HH    HH       H                                                   ',
-        'X   HHH   HH       H                                                   ',
-        'X   HHHH  HH	    H	                                                ',
-        'X         HH			                                        ',
-        'X                                                                      ',
-        'X P XXXXX       XXX                                                    ',	
-        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+        'X                   H                                                   ',
+        'X                   H                                                   ',
+        'X   H               H                                                   ',
+        'X   HH    HH        H                                                   ',
+        'X   HHH   HH        H                                                   ',
+        'X   HHHH  HH        H                                                   ',
+        'X                   H                                                   ',
+        'X                                                                       ',
+        'X P XXXXX       XXX                                                     ',
+        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 
 level_2= [
@@ -25,13 +25,13 @@ level_2= [
 
 
 level_3= [
-        'X                  H                                                   ',
-        'X                  H                                                   ',
-        'X   H              H                                                   ',
-        'X   HH    HH       H                                                   ',
-        'X   HHH   HH       H                                                   ',
-        'X   HHHH  HH	    H	                                                ',
-        'X         HH			                                        ',
-        'X                                                                      ',
-        'X P XXXXX       XXX                                                    ',	
+        'X      H       H       H       H       H       H       H       H      H',
+        'X      H       H       H       H       H       H       H       H      H',
+        'X      H       H       H       H       H       H       H       H      H',
+        'X              H               H               H               H      H',
+        'X                                                                     H',
+        'X                                                                     H',
+        'X                                                                     H',
+        'X                                                                     X',
+        'X P                                                                   X',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']

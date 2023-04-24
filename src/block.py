@@ -8,6 +8,6 @@ class Block(pygame.sprite.Sprite):
         self.image.fill(color)
         self.rect = self.image.get_rect(topleft = position)
         
-    def update(self, x_dt) -> None:
-        self.rect.x += x_dt
+    def update(self, x_change) -> None:
+        self.rect.x += x_change
         

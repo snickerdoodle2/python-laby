@@ -37,4 +37,3 @@ class Player(pygame.sprite.Sprite):
 
 	def update(self) -> None:
 		self.get_direction()
-		self.rect.x += self.direction.x

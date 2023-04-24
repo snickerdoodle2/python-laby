@@ -47,7 +47,7 @@ class Level:
         player = self.player.sprite
         # if player want to go to the right size, move screen
         if player.rect.centerx >= DISPLAY_WIDTH//2 and player.direction.x == 1:
-            self.world_x_shift = - PLAYER_MOVEMENT_SPEED
+            self.world_x_shift = -PLAYER_MOVEMENT_SPEED
             player.movement_speed = 0
         # if player want to go to the left size, move screen
         elif player.rect.centerx <= BLOCK_SIZE*2 and player.direction.x == -1:
@@ -65,18 +65,17 @@ class Level:
 
         # calculate where the player want to go
         self.player.update()
-        
+              
         self.set_screen_movement()
-        
         # update blocks on screen
         self.blocks.update(self.world_x_shift * dt)
         
-        # draw all the blocks
-        self.blocks.draw(self.display_surface)
-
         # check colisions and set player's position
         self.handle_horizontal_collision(dt)
         self.handle_vertical_collision(dt)
+        
+        # draw all the blocks
+        self.blocks.draw(self.display_surface)
         
         # draw the player
         self.player.draw(self.display_surface)
@@ -87,6 +86,7 @@ class Level:
         player = self.player.sprite
         # update player's position
         player.rect.x += player.direction.x	* player.movement_speed * dt		
+        
         for block in self.blocks.sprites():
             # check if player collides with a block
             if block.rect.colliderect(player):
@@ -96,6 +96,7 @@ class Level:
                 # if player is to the right of the block
                 elif player.direction.x < 0:
                     player.rect.left = block.rect.right
+
 
     # TODO: REMOVE MID-AIR JUMP!!
     def handle_vertical_collision(self, dt):
