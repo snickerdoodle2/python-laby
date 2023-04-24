@@ -8,41 +8,46 @@ class Level:
     def __init__(self, level_interface_data, surface) -> None:
         self.display_surface = surface
         self.world_x_shift = 0
-        self.setup(level_interface_data)
+        self.level_layout = level_interface_data
+        self.setup(self.level_layout)
         
         
-    def setup(self, level_data) -> None:
+    def setup(self, level_layout_data) -> None:
         # Set up the player
         self.player = pygame.sprite.GroupSingle()
         
         # Add blocks to self.blocks from level_data
         self.blocks = pygame.sprite.Group()
         
-        for row_index, row in enumerate(level_data):
+        for row_index, row in enumerate(level_layout_data):
             for col_index, cell in enumerate(row):
                 
                 x = col_index * BLOCK_SIZE
                 y = row_index * BLOCK_SIZE
-                
-                if cell == 'H' or cell == 'X':
-                    new_block = Block((x,y), BLOCK_SIZE)
+                # add obstacle on map
+                if cell == 'H':
+                    new_block = Block((x,y), BLOCK_SIZE, "black")
                     self.blocks.add(new_block)
-
-                if cell == 'P':
+                # add grass on map
+                elif cell == 'X':
+                    new_block = Block((x,y), BLOCK_SIZE, "green")
+                    self.blocks.add(new_block) 
+                # add player on map
+                elif cell == 'P':
                     self.player.add(Player((x, y)))        
 
     
     def set_screen_movement(self) -> None:
         player = self.player.sprite
-        
+        # if player want to go to the right size, move screen
         if player.rect.centerx >= DISPLAY_WIDTH//2 and player.direction.x == 1:
             self.world_x_shift = - PLAYER_MOVEMENT_SPEED
             player.movement_speed = 0
-        
+        # if player want to go to the left size, move screen
         elif player.rect.centerx <= BLOCK_SIZE*2 and player.direction.x == -1:
             self.world_x_shift = PLAYER_MOVEMENT_SPEED
             player.movement_speed = 0
-        
+        # else don't move screen horizontally
         else:
             self.world_x_shift = 0
             player.movement_speed = PLAYER_MOVEMENT_SPEED
@@ -50,7 +55,7 @@ class Level:
     
     def run(self, dt) -> None:
         # reset the screen
-        self.display_surface.fill('black')
+        self.display_surface.fill('light blue')
 
         # calculate where the player want to go
         self.player.update()

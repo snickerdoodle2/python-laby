@@ -1,21 +1,11 @@
 import pygame, sys
 from level import Level
 import config
+from levels_layout.level_layout import *
 
 class Game:
     
-    level_map = [
-        'X                  H                                                   ',
-        'X                  H                                                   ',
-        'X   H              H                                                   ',
-        'X   HH    HH       H                                                   ',
-        'X   HHH   HH       H                                                   ',
-        'X   HHHH  HH	    H	                                                ',
-        'X         HH			                                                ',
-        'X                                                                      ',
-        'X P XXXXX       XXX                                                    ',	
-        'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
-    
+
     def __init__(self) -> None:
         pygame.init()
         self.clock = pygame.time.Clock()
@@ -24,6 +14,8 @@ class Game:
         self.screen = pygame.display.set_mode((config.DISPLAY_WIDTH, config.DISPLAY_HEIGHT))
         pygame.display.set_caption('Mario')
         
+        # choosing which level load
+        self.level_map = level_2
         self.level = Level(self.level_map, self.screen)
         
 
