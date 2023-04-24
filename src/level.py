@@ -10,6 +10,7 @@ class Level:
         self.world_x_shift = 0
         self.level_layout = level_interface_data
         self.setup(self.level_layout)
+        self.status = 'running'
         
         
     def setup(self, level_layout_data) -> None:
@@ -18,6 +19,8 @@ class Level:
         
         # Add blocks to self.blocks from level_data
         self.blocks = pygame.sprite.Group()
+
+        self.flag = pygame.sprite.Group()
         
         for row_index, row in enumerate(level_layout_data):
             for col_index, cell in enumerate(row):
@@ -40,7 +43,11 @@ class Level:
                 
                 # add player on map
                 elif cell == 'P':
-                    self.player.add(Player((x, y)))        
+                    self.player.add(Player((x, y)))    
+
+                elif cell == 'F':
+                    new_block = Block((x,y), BLOCK_SIZE, "pink")
+                    self.flag.add(new_block)   
 
     
     def set_screen_movement(self) -> None:
@@ -69,6 +76,7 @@ class Level:
         self.set_screen_movement()
         # update blocks on screen
         self.blocks.update(self.world_x_shift * dt)
+        self.flag.update(self.world_x_shift * dt)
         
         # check colisions and set player's position
         self.handle_horizontal_collision(dt)
@@ -76,9 +84,15 @@ class Level:
         
         # draw all the blocks
         self.blocks.draw(self.display_surface)
+        self.flag.draw(self.display_surface)
         
         # draw the player
         self.player.draw(self.display_surface)
+
+        self.handle_flag_collision()
+
+        if self.player.sprite.dead:
+            self.status = 'dead'
 
     
     
@@ -97,6 +111,13 @@ class Level:
                 elif player.direction.x < 0:
                     player.rect.left = block.rect.right
 
+    def handle_flag_collision(self):
+        player = self.player.sprite
+
+        for flag in self.flag.sprites():
+            if flag.rect.colliderect(player):
+                self.status = 'finished'
+                break
 
     # TODO: REMOVE MID-AIR JUMP!!
     def handle_vertical_collision(self, dt):

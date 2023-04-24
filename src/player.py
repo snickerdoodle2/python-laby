@@ -9,6 +9,7 @@ class Player(pygame.sprite.Sprite):
 		self.image.fill('red')
 		self.rect = self.image.get_rect(topleft = pos)
 		self.can_jump = True
+		self.dead = False
 
 		self.coins = 0
 		# TO UPDATE ^^^^
@@ -37,3 +38,5 @@ class Player(pygame.sprite.Sprite):
 
 	def update(self) -> None:
 		self.get_direction()
+		if self.rect.top > config.DISPLAY_HEIGHT:
+			self.dead = True

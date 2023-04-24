@@ -28,9 +28,17 @@ class Game:
                     
             dt = self.clock.tick() / 1000
             # self.level.run(dt)
+            # TODO: Add better death handling
             self.level.run(0.005)
+            if self.level.status == 'finished':
+                print('Finished!!!')
+                break
+            if self.level.status == 'dead':
+                print('Dead!!!')
+                break
+
             
             pygame.display.update()
             
             
-	
+    
