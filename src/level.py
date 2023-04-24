@@ -32,10 +32,17 @@ class Level:
                     self.player.add(Player((x, y)))        
 
     
-    def set_screen_movement(self, player : Player) -> None:
+    def set_screen_movement(self) -> None:
+        player = self.player.sprite
+        
         if player.rect.centerx >= DISPLAY_WIDTH//2 and player.direction.x == 1:
             self.world_x_shift = - PLAYER_MOVEMENT_SPEED
             player.movement_speed = 0
+        
+        elif player.rect.centerx <= BLOCK_SIZE*2 and player.direction.x == -1:
+            self.world_x_shift = PLAYER_MOVEMENT_SPEED
+            player.movement_speed = 0
+        
         else:
             self.world_x_shift = 0
             player.movement_speed = PLAYER_MOVEMENT_SPEED
@@ -48,7 +55,7 @@ class Level:
         # calculate where the player want to go
         self.player.update()
         
-        self.set_screen_movement(self.player.sprite)
+        self.set_screen_movement()
         
         # update blocks on screen
         self.blocks.update(self.world_x_shift * dt)
