@@ -20,7 +20,7 @@ level_2= [
         'X         HH             H    C      H      H        H H HH H   H      ',
         'X         HH                  C      H      H        H H HH H   H      F',
         'X                 C           C                                  C     F',
-        'X P XXXXX       XXX           H              C      C    C             F',	
+        'X P XXXXX       XXX      E    H           E   C     C    C             F',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 
@@ -33,5 +33,5 @@ level_3= [
         'X                      C                   C                          H',
         'X                      C                   C                          H',
         'X                      C           C       C                          X',
-        'X P          C                                   C          C   C     X',	
+        'X P   E      C  X                                C          C   C     X',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']

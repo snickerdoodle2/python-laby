@@ -2,6 +2,7 @@ import pygame
 from player import Player
 from config import *
 from block import *
+from enemy import *
 
 from block import Block
 class Level:
@@ -26,6 +27,9 @@ class Level:
         # Add coins on map
         self.coins = pygame.sprite.Group()
         
+        # Add enemies on map
+        self.enemies = pygame.sprite.Group()
+        
         for row_index, row in enumerate(level_layout_data):
             for col_index, cell in enumerate(row):
                 
@@ -49,12 +53,16 @@ class Level:
                 
                 # add player on map
                 elif cell == 'P':
-                    self.player.add(Player((x, y)))    
+                    self.player.add(Player((x, y)))
+                
+                elif cell == 'E':
+                    new_enemy = Enemy((x,y), BLOCK_SIZE)
+                    self.enemies.add(new_enemy)  
                 
                 # add flag on map
                 elif cell == 'F':
                     new_block = Block((x,y), BLOCK_SIZE, "pink")
-                    self.flag.add(new_block)   
+                    self.flag.add(new_block)
 
     
     def set_screen_movement(self) -> None:
@@ -85,6 +93,7 @@ class Level:
         self.blocks.update(self.world_x_shift * dt)
         self.coins.update(self.world_x_shift * dt)
         self.flag.update(self.world_x_shift * dt)
+
         
         # check colisions and set player's position
         self.handle_horizontal_collision(dt)
@@ -93,10 +102,14 @@ class Level:
         # coin collecting
         self.handle_coin_collision();
         
-        # draw all the blocks
+        # changing enemy direction while hitting an object
+        self.handle_enemy_collision_with_objects(dt)
+        
+        # draw blocks, coins, flag and enemies
         self.blocks.draw(self.display_surface)
         self.coins.draw(self.display_surface)
         self.flag.draw(self.display_surface)
+        self.enemies.draw(self.display_surface)
         
         # draw the player
         self.player.draw(self.display_surface)
@@ -106,7 +119,17 @@ class Level:
         if self.player.sprite.dead:
             self.status = 'dead'
     
-
+    def handle_enemy_collision_with_objects(self, dt):
+        for enemy in self.enemies.sprites():
+            enemy.rect.x += enemy.direction.x * (PLAYER_MOVEMENT_SPEED//2) * dt
+            
+            for block in self.blocks.sprites():
+                if enemy.rect.colliderect(block):
+                    if enemy.direction.x == 1:
+                        enemy.direction.x = -1
+                    else:
+                        enemy.direction.x = 1
+    
     
     def handle_coin_collision(self):
         player = self.player.sprite
