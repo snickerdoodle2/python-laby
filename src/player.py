@@ -9,6 +9,8 @@ class Player(pygame.sprite.Sprite):
 		self.image.fill('red')
 		self.rect = self.image.get_rect(topleft = pos)
 		self.can_jump = True
+
+		self.coins = 0
 		# TO UPDATE ^^^^
 		# TODO: Settings file
 		self.movement_speed = config.PLAYER_MOVEMENT_SPEED

@@ -32,6 +32,12 @@ class Level:
                 elif cell == 'X':
                     new_block = Block((x,y), BLOCK_SIZE, "green")
                     self.blocks.add(new_block) 
+                
+                # add coins on map
+                elif cell == 'C':
+                    new_block = Block((x,y), BLOCK_SIZE, "yellow")
+                    self.blocks.add(new_block) 
+                
                 # add player on map
                 elif cell == 'P':
                     self.player.add(Player((x, y)))        
