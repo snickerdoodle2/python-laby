@@ -33,5 +33,5 @@ level_3= [
         'X                      C                   C                          H',
         'X                      C                   C                          H',
         'X                      C           C       C                          X',
-        'X P   E      C  X                                C          C   C     X',	
+        'X P          C                 U                 C          C   C     X',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']

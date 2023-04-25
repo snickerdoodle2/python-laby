@@ -12,7 +12,8 @@ class Level:
         self.level_layout = level_interface_data
         self.setup(self.level_layout)
         self.status = 'running'
-        
+        self.active_powerup = 0
+        self.powerup_duration = 1000;
         
     def setup(self, level_layout_data) -> None:
         # Set up the player
@@ -68,7 +69,7 @@ class Level:
                     
                 # add power up on map
                 elif cell == 'U':
-                    new_powerup = Powerup((x,y), BLOCK_SIZE//1.5, 300)
+                    new_powerup = Powerup((x,y), BLOCK_SIZE, 600)
                     self.powerups.add(new_powerup)
 
     
@@ -76,16 +77,16 @@ class Level:
         player = self.player.sprite
         # if player want to go to the right size, move screen
         if player.rect.centerx >= DISPLAY_WIDTH//2 and player.direction.x == 1:
-            self.world_x_shift = -PLAYER_MOVEMENT_SPEED
+            self.world_x_shift = -(PLAYER_MOVEMENT_SPEED + self.active_powerup)
             player.movement_speed = 0
         # if player want to go to the left size, move screen
         elif player.rect.centerx <= BLOCK_SIZE*2 and player.direction.x == -1:
-            self.world_x_shift = PLAYER_MOVEMENT_SPEED
+            self.world_x_shift = PLAYER_MOVEMENT_SPEED + self.active_powerup
             player.movement_speed = 0
         # else don't move screen horizontally
         else:
             self.world_x_shift = 0
-            player.movement_speed = PLAYER_MOVEMENT_SPEED
+            player.movement_speed = PLAYER_MOVEMENT_SPEED + self.active_powerup
 
     
     def run(self, dt) -> None:
@@ -98,6 +99,7 @@ class Level:
         # changing enemy direction while hitting an object
         self.handle_enemy_collision_with_objects(dt)
         self.set_screen_movement()
+        
         # move blocks, coins and flag on screen
         self.blocks.update(self.world_x_shift * dt)
         self.coins.update(self.world_x_shift * dt)
@@ -111,10 +113,11 @@ class Level:
         self.handle_vertical_collision(dt)
         
         # coin collecting
-        self.handle_coin_collision();
+        self.handle_coin_collision()
         
         # getting powerups
-        self.handle_powerup_collision();
+        self.handle_powerup_collision()
+        self.handle_powerup_duration()
         
         # draw blocks, coins, flag and enemies
         self.blocks.draw(self.display_surface)
@@ -123,6 +126,8 @@ class Level:
         self.enemies.draw(self.display_surface)
         self.powerups.draw(self.display_surface)
         
+        
+        print(self.player.sprite.movement_speed, self.world_x_shift)
         # draw the player
         self.player.draw(self.display_surface)
 
@@ -130,6 +135,7 @@ class Level:
 
         if self.player.sprite.dead:
             self.status = 'dead'
+            
     
     def handle_enemy_collision_with_objects(self, dt):
         for enemy in self.enemies.sprites():
@@ -155,11 +161,20 @@ class Level:
                 
     def handle_powerup_collision(self):
         player = self.player.sprite
-
+        
         for powerup in self.powerups.sprites():
             if powerup.rect.colliderect(player):
+                self.active_powerup = powerup.value
+                self.powerup_duration = 1000
                 self.powerups.remove(powerup)
 
+    def handle_powerup_duration(self):
+        if self.powerup_duration > 0 :
+            self.powerup_duration -=1
+            if self.powerup_duration == 0:
+                self.active_powerup = 0
+                
+            
 
     def handle_horizontal_collision(self, dt):
         player = self.player.sprite
