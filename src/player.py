@@ -41,5 +41,3 @@ class Player(pygame.sprite.Sprite):
         if self.rect.top > config.DISPLAY_HEIGHT:
             self.dead = True
     
-    def add_coints(value):
-        coins +=value 

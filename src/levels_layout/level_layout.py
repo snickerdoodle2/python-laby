@@ -18,9 +18,9 @@ level_2= [
         'X         HH             H           H      H        H H HH H   H      ',
         'X         HH             H           H      H        H H HH H   H      ',
         'X         HH             H    C      H      H        H H HH H   H      ',
-        'X         HH                  C      H      H        H H HH H   H     F',
-        'X                 C           C                                  C    F',
-        'X P XXXXX       XXX      E    H           E   C     C    C            F',	
+        'X         HH                  C      H      H        H H HH H   H      F',
+        'X                 C           C                                  C     F',
+        'X P XXXXX   U   XXX      E    H           E   C     C    C             F',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 

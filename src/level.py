@@ -30,6 +30,8 @@ class Level:
         # Add enemies on map
         self.enemies = pygame.sprite.Group()
         
+        self.powerups = pygame.sprite.Group()
+        
         for row_index, row in enumerate(level_layout_data):
             for col_index, cell in enumerate(row):
                 
@@ -63,6 +65,11 @@ class Level:
                 elif cell == 'F':
                     new_block = Block((x,y), BLOCK_SIZE, "pink")
                     self.flag.add(new_block)
+                    
+                # add power up on map
+                elif cell == 'U':
+                    new_powerup = Powerup((x,y), BLOCK_SIZE//1.5, 300)
+                    self.powerups.add(new_powerup)
 
     
     def set_screen_movement(self) -> None:
@@ -88,12 +95,15 @@ class Level:
         # calculate where the player want to go
         self.player.update()
               
+        # changing enemy direction while hitting an object
+        self.handle_enemy_collision_with_objects(dt)
         self.set_screen_movement()
         # move blocks, coins and flag on screen
         self.blocks.update(self.world_x_shift * dt)
         self.coins.update(self.world_x_shift * dt)
         self.flag.update(self.world_x_shift * dt)
         self.enemies.update(self.world_x_shift * dt)
+        self.powerups.update(self.world_x_shift * dt)
 
         
         # check colisions and set player's position
@@ -103,14 +113,15 @@ class Level:
         # coin collecting
         self.handle_coin_collision();
         
-        # changing enemy direction while hitting an object
-        self.handle_enemy_collision_with_objects(dt)
+        # getting powerups
+        self.handle_powerup_collision();
         
         # draw blocks, coins, flag and enemies
         self.blocks.draw(self.display_surface)
         self.coins.draw(self.display_surface)
         self.flag.draw(self.display_surface)
         self.enemies.draw(self.display_surface)
+        self.powerups.draw(self.display_surface)
         
         # draw the player
         self.player.draw(self.display_surface)
@@ -122,9 +133,7 @@ class Level:
     
     def handle_enemy_collision_with_objects(self, dt):
         for enemy in self.enemies.sprites():
-            tmp = enemy.rect.x
-            enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)
-            
+            enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)                        
             for block in self.blocks.sprites():
                 if enemy.rect.colliderect(block):
                     if enemy.direction.x == 1:
@@ -143,6 +152,14 @@ class Level:
                 player.coins += coin.value
                 self.coins.remove(coin)
     
+                
+    def handle_powerup_collision(self):
+        player = self.player.sprite
+
+        for powerup in self.powerups.sprites():
+            if powerup.rect.colliderect(player):
+                self.powerups.remove(powerup)
+
 
     def handle_horizontal_collision(self, dt):
         player = self.player.sprite
