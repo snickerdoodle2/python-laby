@@ -93,6 +93,7 @@ class Level:
         self.blocks.update(self.world_x_shift * dt)
         self.coins.update(self.world_x_shift * dt)
         self.flag.update(self.world_x_shift * dt)
+        self.enemies.update(self.world_x_shift * dt)
 
         
         # check colisions and set player's position
@@ -121,14 +122,17 @@ class Level:
     
     def handle_enemy_collision_with_objects(self, dt):
         for enemy in self.enemies.sprites():
-            enemy.rect.x += enemy.direction.x * (PLAYER_MOVEMENT_SPEED//2) * dt
+            tmp = enemy.rect.x
+            enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)
             
             for block in self.blocks.sprites():
                 if enemy.rect.colliderect(block):
                     if enemy.direction.x == 1:
-                        enemy.direction.x = -1
+                        enemy.rect.right = block.rect.left
                     else:
-                        enemy.direction.x = 1
+                        enemy.rect.left = block.rect.right
+
+                    enemy.direction.x *= -1
     
     
     def handle_coin_collision(self):

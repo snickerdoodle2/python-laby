@@ -9,3 +9,5 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = position)
         self.direction = pygame.Vector2(-1,0)
         
+    def update(self, x_change):
+        self.rect.x += x_change
