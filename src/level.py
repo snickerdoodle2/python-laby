@@ -15,6 +15,8 @@ class Level:
         self.active_powerup = 0
         self.powerup_duration = 1000
         
+        self.start_time = pygame.time.get_ticks()
+        
         self.font = pygame.font.Font('assets/Pixeboy.ttf', 32)
         
     def setup(self, level_layout_data) -> None:
@@ -133,15 +135,19 @@ class Level:
         self.player.draw(self.display_surface)
 
         self.handle_flag_collision()
-
-
-        score_text = self.font.render(str(self.player.sprite.score).zfill(8), True, (255, 255, 255))
-
+        
+        # render score text  
+        score_text = self.font.render(str(self.player.sprite.score).zfill(8), True, (255, 255, 255))        
         score_rect = score_text.get_rect()
         score_rect.center = (DISPLAY_WIDTH - 80, 30)
         self.display_surface.blit(score_text, score_rect)
 
-
+        # render timer text
+        current_time = pygame.time.get_ticks()
+        elapsed_time = (current_time - self.start_time)/1000
+        timer_text = self.font.render("Time: " + str(elapsed_time), True, (255, 255, 255))
+        self.display_surface.blit(timer_text, (30, 30))
+        
         if self.player.sprite.dead:
             self.status = 'dead'
             
@@ -158,7 +164,20 @@ class Level:
 
                     enemy.direction.x *= -1
     
-    
+    def handle_collision_with_enemy(self,dt):
+        player = self.player.sprite
+
+        for block in self.enemies.sprites():
+            # check if player collides with a enemy
+            if block.rect.colliderect(player):
+                # if player is above the block
+                if player.direction.y > 0:
+                    player.can_jump = True
+                    player.rect.bottom = block.rect.top
+                    player.direction.y = 0
+
+
+  
     def handle_coin_collision(self):
         player = self.player.sprite
 
