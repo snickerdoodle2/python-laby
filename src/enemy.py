@@ -11,3 +11,4 @@ class Enemy(pygame.sprite.Sprite):
         
     def update(self, x_change):
         self.rect.x += x_change
+        

@@ -123,6 +123,9 @@ class Level:
         self.handle_powerup_collision()
         self.handle_powerup_duration()
         
+        # handlin collisions with enemies
+        self.handle_collision_with_enemy()
+        
         # draw blocks, coins, flag and enemies
         self.blocks.draw(self.display_surface)
         self.coins.draw(self.display_surface)
@@ -164,17 +167,25 @@ class Level:
 
                     enemy.direction.x *= -1
     
-    def handle_collision_with_enemy(self,dt):
+    def handle_collision_with_enemy(self):
         player = self.player.sprite
 
-        for block in self.enemies.sprites():
+        for enemy in self.enemies.sprites():
             # check if player collides with a enemy
-            if block.rect.colliderect(player):
-                # if player is above the block
-                if player.direction.y > 0:
-                    player.can_jump = True
-                    player.rect.bottom = block.rect.top
-                    player.direction.y = 0
+            if enemy.rect.colliderect(player):
+                # if player is above the enemy
+                if not player.rect.bottom < enemy.rect.top+10:
+                    self.player.sprite.dead = True
+                else:
+                    self.enemies.remove(enemy)
+                # if (player.direction.x > 0 or player.direction.x < 0) and player:
+                #     self.player.sprite.dead = True
+                # elif player.direction.y > 0:
+                #     # player.can_jump = True
+                #     # player.rect.bottom = enemy.rect.top
+                #     player.direction.y = 0
+                #     self.enemies.remove(enemy)
+                # if player is on the side of enemy
 
 
   
