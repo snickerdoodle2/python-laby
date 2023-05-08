@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.can_jump = True
         self.dead = False
 
-        self.coins = 0
+        self.score = 5000
         # TO UPDATE ^^^^
         # TODO: Settings file
         self.movement_speed = config.PLAYER_MOVEMENT_SPEED
@@ -19,6 +19,9 @@ class Player(pygame.sprite.Sprite):
         self.jump_speed = config.PLAYER_JUMP_SPEED
         # vector storing where and how fast player wants to go
         self.direction = pygame.Vector2()
+        
+    def coin_obtained(self):
+        self.score += 100
 
 # NIE WIEM CZEMU LOSOWO SKACZE WYZEJ STRZELAM ZE PRZEZ PROBLEMY Z FLOATEM :D
     def get_direction(self) -> None:
