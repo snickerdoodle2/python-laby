@@ -127,7 +127,6 @@ class Level:
         self.powerups.draw(self.display_surface)
         
         
-        print(self.player.sprite.movement_speed, self.world_x_shift)
         # draw the player
         self.player.draw(self.display_surface)
 
