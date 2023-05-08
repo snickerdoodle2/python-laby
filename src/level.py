@@ -13,7 +13,9 @@ class Level:
         self.setup(self.level_layout)
         self.status = 'running'
         self.active_powerup = 0
-        self.powerup_duration = 1000;
+        self.powerup_duration = 1000
+        
+        self.font = pygame.font.Font('assets/Pixeboy.ttf', 32)
         
     def setup(self, level_layout_data) -> None:
         # Set up the player
@@ -132,6 +134,14 @@ class Level:
 
         self.handle_flag_collision()
 
+
+        score_text = self.font.render(str(self.player.sprite.score).zfill(8), True, (255, 255, 255), (0, 0, 0))
+
+        score_rect = score_text.get_rect()
+        score_rect.center = (DISPLAY_WIDTH - 80, 30)
+        self.display_surface.blit(score_text, score_rect)
+
+
         if self.player.sprite.dead:
             self.status = 'dead'
             
@@ -154,7 +164,7 @@ class Level:
 
         for coin in self.coins.sprites():
             if coin.rect.colliderect(player):
-                player.coins += coin.value
+                player.coin_obtained()
                 self.coins.remove(coin)
     
                 
