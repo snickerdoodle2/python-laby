@@ -15,9 +15,9 @@ class Game:
         pygame.display.set_caption('Mario')
         
         # choosing which level load
-        self.level_map = level_3
+        self.level_map = level_1
         self.level = Level(self.level_map, self.screen)
-        
+
 
     def run(self) -> None:
         while True:
@@ -31,8 +31,15 @@ class Game:
             # TODO: Add better death handling
             self.level.run(0.005)
             if self.level.status == 'finished':
-                print('Finished!!!')
-                break
+                if self.level_map == level_1:
+                    self.level_map = level_2
+                elif self.level_map == level_2:
+                    self.level_map = level_3
+                else:
+                    print("Finished!!")
+                    break
+                self.level = Level(self.level_map, self.screen)
+                
             if self.level.status == 'dead':
                 print('Dead!!!')
                 break

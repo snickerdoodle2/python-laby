@@ -5,9 +5,9 @@ level_1= [
         'X   HH    HH        H                                                   ',
         'X   HHH   HH        H                                                   ',
         'X   HHHH  HH        H                                                   ',
-        'X                   H                                                   ',
-        'X                                                                       ',
-        'X P XXXXX       XXX                                                     ',
+        'X                   H          F                                        ',
+        'X                              F                                        ',
+        'X P XXXXX       XXX            F                                        ',
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
 
@@ -31,7 +31,7 @@ level_3= [
         'X              H               H               H               H      H',
         'X                                                                     H',
         'X                      C                   C                          H',
-        'X                      C                   C                          H',
-        'X                      C           C       C                          X',
-        'X P          C                 U                 C          C   C     X',	
+        'X                      C                   C                         FH',
+        'X                      C           C       C                         FX',
+        'X P          C                 U                 C          C   C    FX',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
