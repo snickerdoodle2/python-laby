@@ -135,7 +135,7 @@ class Level:
         self.handle_flag_collision()
 
 
-        score_text = self.font.render(str(self.player.sprite.score).zfill(8), True, (255, 255, 255), (0, 0, 0))
+        score_text = self.font.render(str(self.player.sprite.score).zfill(8), True, (255, 255, 255))
 
         score_rect = score_text.get_rect()
         score_rect.center = (DISPLAY_WIDTH - 80, 30)
