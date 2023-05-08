@@ -173,19 +173,14 @@ class Level:
         for enemy in self.enemies.sprites():
             # check if player collides with a enemy
             if enemy.rect.colliderect(player):
-                # if player is above the enemy
+                # if player ran into enemy 💀
                 if not player.rect.bottom < enemy.rect.top+10:
                     self.player.sprite.dead = True
+                # else if player is above the enemy
                 else:
+                    player.coin_obtained()
                     self.enemies.remove(enemy)
-                # if (player.direction.x > 0 or player.direction.x < 0) and player:
-                #     self.player.sprite.dead = True
-                # elif player.direction.y > 0:
-                #     # player.can_jump = True
-                #     # player.rect.bottom = enemy.rect.top
-                #     player.direction.y = 0
-                #     self.enemies.remove(enemy)
-                # if player is on the side of enemy
+
 
 
   
