@@ -22,7 +22,12 @@ class Game:
     def update_level(self) -> bool:
         if self.cur_level >= len(LEVELS): return False
         self.level = Level(LEVELS[self.cur_level], self.screen)    
-        return True    
+        return True
+    
+    def set_level(self, index) -> None:
+        self.cur_level = index
+        self.update_level()
+
 
     def run(self) -> None:
         while True:
