@@ -1,5 +1,4 @@
 import pygame
-from config import *
 
 
 class Block(pygame.sprite.Sprite):

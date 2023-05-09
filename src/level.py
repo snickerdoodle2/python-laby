@@ -1,10 +1,10 @@
 import pygame
+from config import BLOCK_SIZE, DISPLAY_WIDTH, PLAYER_MOVEMENT_SPEED
+from enemy import Enemy
 from player import Player
-from config import *
-from block import *
-from enemy import *
 
-from block import Block
+
+from block import Block, Coin, Powerup
 class Level:
     def __init__(self, level_interface_data, surface) -> None:
         self.display_surface = surface

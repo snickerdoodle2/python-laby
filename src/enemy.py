@@ -1,5 +1,4 @@
 import pygame
-from config import *
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, position, size):
