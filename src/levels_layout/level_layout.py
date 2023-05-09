@@ -35,3 +35,5 @@ level_3= [
         'X                      C           C       C                         FX',
         'X P          C                 U                 C          C   C    FX',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+
+LEVELS = [level_1, level_2, level_3]
