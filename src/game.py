@@ -1,7 +1,7 @@
 import pygame, sys
 from level import Level
 import config
-from levels_layout.level_layout import *
+from levels_layout.level_layout import LEVELS
 
 class Game:
     
@@ -15,9 +15,14 @@ class Game:
         pygame.display.set_caption('Mario')
         
         # choosing which level load
-        self.level_map = level_1
-        self.level = Level(self.level_map, self.screen)
+        self.cur_level = 0
+        self.level = None
+        self.update_level()
 
+    def update_level(self) -> bool:
+        if self.cur_level >= len(LEVELS): return False
+        self.level = Level(LEVELS[self.cur_level], self.screen)    
+        return True    
 
     def run(self) -> None:
         while True:
@@ -31,14 +36,10 @@ class Game:
             # TODO: Add better death handling
             self.level.run(0.005)
             if self.level.status == 'finished':
-                if self.level_map == level_1:
-                    self.level_map = level_2
-                elif self.level_map == level_2:
-                    self.level_map = level_3
-                else:
-                    print("Finished!!")
+                self.cur_level += 1
+                if not self.update_level():
+                    print("GZ")
                     break
-                self.level = Level(self.level_map, self.screen)
                 
             if self.level.status == 'dead':
                 print('Dead!!!')
