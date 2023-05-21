@@ -1,3 +1,4 @@
 activate
 __pycache__
 venv
+.idea
