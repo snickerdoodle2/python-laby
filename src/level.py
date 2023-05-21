@@ -1,5 +1,5 @@
 import pygame
-from config import BLOCK_SIZE, DISPLAY_WIDTH, PLAYER_MOVEMENT_SPEED
+from config import BLOCK_SIZE, DISPLAY_WIDTH, PLAYER_MOVEMENT_SPEED, PLAYER_JUMP_SPEED
 from enemy import GroundEnemy, FlyingEnemy
 from player import Player
 
@@ -186,24 +186,35 @@ class Level:
             # check if player collides with a enemy
             if enemy.rect.colliderect(player):
                 # if player ran into enemy 💀
-                if not player.rect.bottom < enemy.rect.top+10:
-                    self.player.sprite.dead = True
+                if player.rect.bottom <= enemy.rect.top+10:
+                    player.coin_obtained()
+                    player.rect.bottom = enemy.rect.top
+                    player.direction.y = PLAYER_JUMP_SPEED//2
+                    self.ground_enemies.remove(enemy)
                 # else if player is above the enemy
                 else:
-                    player.coin_obtained()
-                    self.ground_enemies.remove(enemy)
+                    self.player.sprite.dead = True
 
     def handle_collision_with_flying_enemy(self, dt) -> None:
+        player = self.player.sprite
+        
         for enemy in self.flying_enemies.sprites():
             enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)
             
-        player = self.player.sprite
         for enemy in self.flying_enemies.sprites():
             # check if player collides with a enemy
             if enemy.rect.colliderect(player):
-                # else if player is above or under the enemy
-                if player.rect.bottom <= enemy.rect.top+10 or player.rect.top >= enemy.rect.bottom-10:
+                # if player is above enemy
+                if player.rect.bottom <= enemy.rect.top+10:
                     player.coin_obtained()
+                    player.rect.bottom = enemy.rect.top
+                    player.direction.y = PLAYER_JUMP_SPEED//2
+                    self.flying_enemies.remove(enemy)
+                # if player is under enemy
+                elif player.rect.top >= enemy.rect.bottom-10:
+                    player.coin_obtained()
+                    player.rect.top = enemy.rect.bottom
+                    player.direction.y = 0
                     self.flying_enemies.remove(enemy)
                 # if player ran into enemy 💀
                 else:
