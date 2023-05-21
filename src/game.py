@@ -47,7 +47,8 @@ class Game:
                     self.pause = not self.pause
                     
                 elif self.start_screen == True and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    self.start_screen = False    
+                    self.start_screen = False
+                    self.set_level(0)  
             
             if self.start_screen:
                 self.show_start_screen()
