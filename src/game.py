@@ -17,6 +17,7 @@ class Game:
         self.level = None
         self.update_level()
         
+        self.start_screen = True
         self.pause = False        
 
     def update_level(self) -> bool:
@@ -35,15 +36,22 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                    
                 elif self.level.status == 'finished' and event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     self.set_level(0)
                 
                 elif self.level.status == 'dead' and event.type == pygame.KEYDOWN and event.key == pygame.K_r:
                     self.set_level(0)
                     
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.level.status != 'dead':
+                elif self.level.status != 'dead' and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.pause = not self.pause
                     
+                elif self.start_screen == True and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    self.start_screen = False    
+            
+            if self.start_screen:
+                self.show_start_screen()
+                continue
 
             if self.level.status == 'dead':
                 self.show_death_screen()
@@ -64,7 +72,11 @@ class Game:
             self.level.run(0.005)
             
             pygame.display.update()
-            
+    
+    def show_start_screen(self) -> None:
+        self.screen.fill('light blue')
+        self.show_two_lines_of_text("BAWARIO", 80, "Press SPACE to start", 30, 50)
+        pygame.display.flip()
             
     def show_pause_screen(self) -> None:
         self.show_two_lines_of_text("Paused!", 80, "Press ESC to resume", 30, 50)
