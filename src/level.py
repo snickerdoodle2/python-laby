@@ -1,6 +1,6 @@
 import pygame
 from config import BLOCK_SIZE, DISPLAY_WIDTH, PLAYER_MOVEMENT_SPEED
-from enemy import Enemy
+from enemy import GroundEnemy, FlyingEnemy
 from player import Player
 
 
@@ -33,7 +33,8 @@ class Level:
         self.coins = pygame.sprite.Group()
         
         # Add enemies on map
-        self.enemies = pygame.sprite.Group()
+        self.ground_enemies = pygame.sprite.Group()
+        self.flying_enemies = pygame.sprite.Group()
         
         self.powerups = pygame.sprite.Group()
         
@@ -62,9 +63,15 @@ class Level:
                 elif cell == 'P':
                     self.player.add(Player((x, y)))
                 
+                # add enemies on ground 
                 elif cell == 'E':
-                    new_enemy = Enemy((x,y), BLOCK_SIZE)
-                    self.enemies.add(new_enemy)  
+                    new_enemy = GroundEnemy((x,y), BLOCK_SIZE)
+                    self.ground_enemies.add(new_enemy)
+                    
+                # add flying enemies
+                elif cell == 'B':
+                    new_enemy = FlyingEnemy((x,y), BLOCK_SIZE)
+                    self.flying_enemies.add(new_enemy)
                 
                 # add flag on map
                 elif cell == 'F':
@@ -101,14 +108,15 @@ class Level:
         self.player.update()
               
         # changing enemy direction while hitting an object
-        self.handle_enemy_collision_with_objects(dt)
+        self.handle_ground_enemy_collision_with_objects(dt)
         self.set_screen_movement()
         
         # move blocks, coins and flag on screen
         self.blocks.update(self.world_x_shift * dt)
         self.coins.update(self.world_x_shift * dt)
         self.flag.update(self.world_x_shift * dt)
-        self.enemies.update(self.world_x_shift * dt)
+        self.ground_enemies.update(self.world_x_shift * dt)
+        self.flying_enemies.update(self.world_x_shift * dt)
         self.powerups.update(self.world_x_shift * dt)
 
         
@@ -124,13 +132,15 @@ class Level:
         self.handle_powerup_duration()
         
         # handlin collisions with enemies
-        self.handle_collision_with_enemy()
+        self.handle_collision_with_ground_enemy()
+        self.handle_collision_with_flying_enemy(dt)
         
         # draw blocks, coins, flag and enemies
         self.blocks.draw(self.display_surface)
         self.coins.draw(self.display_surface)
         self.flag.draw(self.display_surface)
-        self.enemies.draw(self.display_surface)
+        self.ground_enemies.draw(self.display_surface)
+        self.flying_enemies.draw(self.display_surface)
         self.powerups.draw(self.display_surface)
         
         
@@ -154,9 +164,10 @@ class Level:
         if self.player.sprite.dead:
             self.status = 'dead'
             
-    
-    def handle_enemy_collision_with_objects(self, dt) -> None:
-        for enemy in self.enemies.sprites():
+
+    # collision handler for enemies on ground
+    def handle_ground_enemy_collision_with_objects(self, dt) -> None:
+        for enemy in self.ground_enemies.sprites():
             enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)                        
             for block in self.blocks.sprites():
                 if enemy.rect.colliderect(block):
@@ -166,11 +177,12 @@ class Level:
                         enemy.rect.left = block.rect.right
 
                     enemy.direction.x *= -1
-    
-    def handle_collision_with_enemy(self) -> None:
+                    
+    # collision handler for enemies on ground
+    def handle_collision_with_ground_enemy(self) -> None:
         player = self.player.sprite
 
-        for enemy in self.enemies.sprites():
+        for enemy in self.ground_enemies.sprites():
             # check if player collides with a enemy
             if enemy.rect.colliderect(player):
                 # if player ran into enemy 💀
@@ -179,9 +191,23 @@ class Level:
                 # else if player is above the enemy
                 else:
                     player.coin_obtained()
-                    self.enemies.remove(enemy)
+                    self.ground_enemies.remove(enemy)
 
-
+    def handle_collision_with_flying_enemy(self, dt) -> None:
+        for enemy in self.flying_enemies.sprites():
+            enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)
+            
+        player = self.player.sprite
+        for enemy in self.flying_enemies.sprites():
+            # check if player collides with a enemy
+            if enemy.rect.colliderect(player):
+                # else if player is above or under the enemy
+                if player.rect.bottom <= enemy.rect.top+10 or player.rect.top >= enemy.rect.bottom-10:
+                    player.coin_obtained()
+                    self.flying_enemies.remove(enemy)
+                # if player ran into enemy 💀
+                else:
+                    self.player.sprite.dead = True
   
     def handle_coin_collision(self) -> None:
         player = self.player.sprite

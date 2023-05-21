@@ -6,7 +6,7 @@ level_1= [
         'X                              C        H               H            H      H      H      H             H',
         'X       C                      H                                                                        H',
         'X                              H                        H      H                                   F    H',
-        'X               U                                       H                                          F    H',
+        'X               U     B                B                H                 B                  B     F    H',
         'X P XXXXX    E  XXX      E               X        E     H                                          F    H',
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
@@ -18,8 +18,8 @@ level_2= [
         'X         HH             H           H      H       H  H  H H  H                  ',
         'X         HH             H           H      H       H  H  H H  H                  ',
         'X         HH             H    C      H      H       H  H  H H  H                  ',
-        'X         HH                  C      H      H       H  H  H H  H       F          ',
-        'X                 C           C                                  C     F          ',
+        'X         HH                  C      H      H       H  H  H H  H     B F     B    ',
+        'X                 C           C                         B        C     F          ',
         'X P XXXXX   U   XXX      E    H           E   C     C    C             F          ',	
         'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
 
