@@ -1,13 +1,14 @@
 import pygame
 import config
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos) -> None:
         super().__init__()
         # TO UPDATE vvvv
         self.image = pygame.Surface((64, 64))
         self.image.fill('red')
-        self.rect = self.image.get_rect(topleft = pos)
+        self.rect = self.image.get_rect(topleft=pos)
         self.can_jump = True
         self.dead = False
 
@@ -19,11 +20,11 @@ class Player(pygame.sprite.Sprite):
         self.jump_speed = config.PLAYER_JUMP_SPEED
         # vector storing where and how fast player wants to go
         self.direction = pygame.Vector2()
-        
+
     def coin_obtained(self):
         self.score += 100
 
-# NIE WIEM CZEMU LOSOWO SKACZE WYZEJ STRZELAM ZE PRZEZ PROBLEMY Z FLOATEM :D
+    # NIE WIEM CZEMU LOSOWO SKACZE WYZEJ STRZELAM ZE PRZEZ PROBLEMY Z FLOATEM :D
     def get_direction(self) -> None:
         keys_state = pygame.key.get_pressed()
         if keys_state[pygame.K_LEFT]:
@@ -43,4 +44,3 @@ class Player(pygame.sprite.Sprite):
         self.get_direction()
         if self.rect.top > config.DISPLAY_HEIGHT:
             self.dead = True
-    
