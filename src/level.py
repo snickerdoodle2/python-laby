@@ -155,7 +155,7 @@ class Level:
             self.status = 'dead'
             
     
-    def handle_enemy_collision_with_objects(self, dt):
+    def handle_enemy_collision_with_objects(self, dt) -> None:
         for enemy in self.enemies.sprites():
             enemy.rect.x += round(enemy.direction.x * (PLAYER_MOVEMENT_SPEED//3) * dt)                        
             for block in self.blocks.sprites():
@@ -167,7 +167,7 @@ class Level:
 
                     enemy.direction.x *= -1
     
-    def handle_collision_with_enemy(self):
+    def handle_collision_with_enemy(self) -> None:
         player = self.player.sprite
 
         for enemy in self.enemies.sprites():
@@ -182,9 +182,8 @@ class Level:
                     self.enemies.remove(enemy)
 
 
-
   
-    def handle_coin_collision(self):
+    def handle_coin_collision(self) -> None:
         player = self.player.sprite
 
         for coin in self.coins.sprites():
@@ -193,7 +192,7 @@ class Level:
                 self.coins.remove(coin)
     
                 
-    def handle_powerup_collision(self):
+    def handle_powerup_collision(self) -> None:
         player = self.player.sprite
         
         for powerup in self.powerups.sprites():
@@ -202,7 +201,7 @@ class Level:
                 self.powerup_duration = 1000
                 self.powerups.remove(powerup)
 
-    def handle_powerup_duration(self):
+    def handle_powerup_duration(self) -> None:
         if self.powerup_duration > 0 :
             self.powerup_duration -=1
             if self.powerup_duration == 0:
@@ -210,7 +209,7 @@ class Level:
                 
             
 
-    def handle_horizontal_collision(self, dt):
+    def handle_horizontal_collision(self, dt) -> None:
         player = self.player.sprite
         # update player's position
         player.rect.x += player.direction.x	* player.movement_speed * dt		
@@ -225,7 +224,7 @@ class Level:
                 elif player.direction.x < 0:
                     player.rect.left = block.rect.right
 
-    def handle_flag_collision(self):
+    def handle_flag_collision(self) -> None:
         player = self.player.sprite
 
         for flag in self.flag.sprites():
@@ -234,7 +233,7 @@ class Level:
                 break
 
     # TODO: REMOVE MID-AIR JUMP!!
-    def handle_vertical_collision(self, dt):
+    def handle_vertical_collision(self, dt) -> None:
         player = self.player.sprite
         # update player's position
         player.rect.y += player.direction.y * dt

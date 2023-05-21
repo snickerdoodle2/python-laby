@@ -17,7 +17,7 @@ class Game:
         self.level = None
         self.update_level()
         
-        self.pause = False
+        self.pause = False        
 
     def update_level(self) -> bool:
         if self.cur_level >= len(LEVELS): return False
@@ -35,35 +35,58 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                elif self.level.status == 'finished' and event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+                    self.set_level(0)
+                
+                elif self.level.status == 'dead' and event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    self.set_level(0)
+                    
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and self.level.status != 'dead':
                     self.pause = not self.pause
+                    
+
+            if self.level.status == 'dead':
+                self.show_death_screen()
+                continue
 
             if self.pause:
                 self.show_pause_screen()
                 continue
             
-                                
-            dt = self.clock.tick() / 1000
-            # self.level.run(dt)
-            # TODO: Add better death handling
-            self.level.run(0.005)
             if self.level.status == 'finished':
                 self.cur_level += 1
                 if not self.update_level():
-                    print("GZ")
-                    break
-                
-            if self.level.status == 'dead':
-                print('Dead!!!')
-                break
+                    self.show_winner_screen()
+                    continue
 
+            dt = self.clock.tick() / 1000
+            # self.level.run(dt)
+            self.level.run(0.005)
             
             pygame.display.update()
             
             
-    def show_pause_screen(self):
-        self.font = pygame.font.Font('assets/Pixeboy.ttf', 50)
-        text = self.font.render("Paused", True, (255, 255, 255))
-        text_rect = text.get_rect(center=( config.DISPLAY_WIDTH// 2, config.DISPLAY_HEIGHT // 2))
-        self.screen.blit(text, text_rect)
+    def show_pause_screen(self) -> None:
+        self.show_two_lines_of_text("Paused!", 80, "Press ESC to resume", 30, 50)
         pygame.display.flip()
+        
+    def show_death_screen(self) -> None:
+        self.show_two_lines_of_text("GAME OVER!", 100, "Press R to restart", 40, 50)
+        pygame.display.flip()
+        
+    def show_winner_screen(self) -> None:
+        self.show_two_lines_of_text("YOU WON!", 110, "Press S to start game again", 40, 60)
+        pygame.display.flip()
+        
+    def show_two_lines_of_text(self, text_1 : str, size_1 : int, text_2 : str, size_2 : int, lines_gap : int) -> None:
+        bigger_font = pygame.font.Font('assets/Pixeboy.ttf', size_1)
+        smaller_font = pygame.font.Font('assets/Pixeboy.ttf', size_2)
+        
+        text_1 = bigger_font.render(text_1, True, (255, 255, 255))
+        text_2 = smaller_font.render(text_2, True, (255, 255, 255))
+        
+        text_rect_1 = text_1.get_rect(center=( config.DISPLAY_WIDTH// 2, config.DISPLAY_HEIGHT // 2))
+        text_rect_2 = text_2.get_rect(center=( config.DISPLAY_WIDTH// 2, config.DISPLAY_HEIGHT // 2 + lines_gap))
+        
+        self.screen.blit(text_1, text_rect_1)
+        self.screen.blit(text_2, text_rect_2)
