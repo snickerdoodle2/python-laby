@@ -6,8 +6,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos) -> None:
         super().__init__()
         # TO UPDATE vvvv
-        self.image = pygame.Surface((64, 64))
-        self.image.fill('red')
+        self.image = pygame.image.load('assets/bawario.png')
         self.rect = self.image.get_rect(topleft=pos)
         self.can_jump = True
         self.dead = False
