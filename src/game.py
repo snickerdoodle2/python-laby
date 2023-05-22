@@ -68,7 +68,7 @@ class Game:
                     self.show_winner_screen()
                     continue
 
-            dt = self.clock.tick(120) / 1000
+            dt = self.clock.tick(200) / 1000
             self.level.run(dt)
             # self.level.run(0.005)
 

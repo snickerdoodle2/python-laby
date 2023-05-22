@@ -47,17 +47,20 @@ class Level:
 
                 # add obstacle on map
                 if cell == 'H':
-                    new_block = Block((x, y), BLOCK_SIZE, "black")
+                    new_block = Block((x, y), "assets/brick.png")
                     self.blocks.add(new_block)
 
                 # add grass on map
                 elif cell == 'X':
-                    new_block = Block((x, y), BLOCK_SIZE, "green")
+                    new_block = Block((x, y), "assets/grass.png")
                     self.blocks.add(new_block)
 
+                elif cell == 'G':
+                    new_block = Block((x, y), "assets/dirt.png")
+                    self.blocks.add(new_block)
                     # add coins on map
                 elif cell == 'C':
-                    new_coin = Coin((x, y), BLOCK_SIZE // 1.5, 50)
+                    new_coin = Coin((x, y), 50)
                     self.coins.add(new_coin)
 
                 # add player on map
@@ -76,7 +79,7 @@ class Level:
 
                 # add flag on map
                 elif cell == 'F':
-                    new_block = Block((x, y), BLOCK_SIZE, "pink")
+                    new_block = Block((x, y), "assets/flag.png")
                     self.flag.add(new_block)
 
                 # add power up on map
