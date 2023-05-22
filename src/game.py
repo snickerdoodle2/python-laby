@@ -46,7 +46,7 @@ class Game:
                 elif self.level.status != 'dead' and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.pause = not self.pause
 
-                elif self.start_screen == True and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                elif self.start_screen == True and event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     self.start_screen = False
                     self.set_level(0)
 
@@ -68,15 +68,15 @@ class Game:
                     self.show_winner_screen()
                     continue
 
-            dt = self.clock.tick() / 1000
-            # self.level.run(dt)
-            self.level.run(0.005)
+            dt = self.clock.tick(120) / 1000
+            self.level.run(dt)
+            # self.level.run(0.005)
 
             pygame.display.update()
 
     def show_start_screen(self) -> None:
         self.screen.fill('light blue')
-        self.show_two_lines_of_text("BAWARIO", 80, "Press SPACE to start", 30, 50)
+        self.show_two_lines_of_text("BAWARIO", 80, "Press S to start", 30, 50)
         pygame.display.flip()
 
     def show_pause_screen(self) -> None:
