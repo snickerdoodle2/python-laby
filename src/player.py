@@ -37,8 +37,7 @@ class Player(pygame.sprite.Sprite):
         if keys_state[pygame.K_SPACE] and self.can_jump:
             self.direction.y = self.jump_speed
             self.can_jump = False
-        else:
-            self.direction.y += self.gravity
+        self.direction.y += self.gravity
 
     def update(self) -> None:
         self.get_direction()

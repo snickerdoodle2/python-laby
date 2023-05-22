@@ -81,7 +81,7 @@ class Level:
 
                 # add power up on map
                 elif cell == 'U':
-                    new_powerup = Powerup((x, y), BLOCK_SIZE, 600)
+                    new_powerup = Powerup((x, y), BLOCK_SIZE, PLAYER_MOVEMENT_SPEED // 3)
                     self.powerups.add(new_powerup)
 
     def set_screen_movement(self) -> None:
@@ -182,7 +182,7 @@ class Level:
             # check if player collides with a enemy
             if enemy.rect.colliderect(player):
                 # if player ran into enemy 💀
-                if player.rect.bottom <= enemy.rect.top + 10:
+                if player.direction.y > 0:
                     player.coin_obtained()
                     player.rect.bottom = enemy.rect.top
                     player.direction.y = PLAYER_JUMP_SPEED // 2
@@ -266,7 +266,7 @@ class Level:
     def handle_vertical_collision(self, dt) -> None:
         player = self.player.sprite
         # update player's position
-        player.rect.y += player.direction.y * dt
+        player.rect.bottom += player.direction.y * dt
         for block in self.blocks.sprites():
             # check if player collides with a block
             if block.rect.colliderect(player):
@@ -274,8 +274,7 @@ class Level:
                 if player.direction.y > 0:
                     player.can_jump = True
                     player.rect.bottom = block.rect.top
-                    player.direction.y = 0
                 # if player is under the block
                 elif player.direction.y < 0:
                     player.rect.top = block.rect.bottom
-                    player.direction.y = 0
+                player.direction.y = 0
