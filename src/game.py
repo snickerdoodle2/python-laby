@@ -20,6 +20,10 @@ class Game:
 
         self.start_screen = True
         self.pause = False
+        
+        pygame.mixer.music.load('assets/theme.mp3')
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(-1)
 
     def update_level(self) -> bool:
         if self.cur_level >= len(LEVELS): return False
@@ -45,6 +49,8 @@ class Game:
 
                 elif self.level.status != 'dead' and event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     self.pause = not self.pause
+                    if self.pause: pygame.mixer.music.pause()
+                    else: pygame.mixer.music.unpause()
 
                 elif self.start_screen == True and event.type == pygame.KEYDOWN and event.key == pygame.K_s:
                     self.start_screen = False

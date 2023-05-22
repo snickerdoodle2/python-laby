@@ -19,6 +19,10 @@ class Level:
         self.start_time = pygame.time.get_ticks()
 
         self.font = pygame.font.Font('assets/Pixeboy.ttf', 32)
+        
+        self.coin_sound = pygame.mixer.Sound('assets/coin.mp3')
+        self.death_sound = pygame.mixer.Sound('assets/death.mp3')
+        self.powerup_sound = pygame.mixer.Sound('assets/powerup.mp3')
 
     def setup(self, level_layout_data) -> None:
         # Set up the player
@@ -162,6 +166,8 @@ class Level:
         self.display_surface.blit(timer_text, (30, 30))
 
         if self.player.sprite.dead:
+            pygame.mixer.music.stop()
+            pygame.mixer.Sound.play(self.death_sound)
             self.status = 'dead'
 
     # collision handler for enemies on ground
@@ -224,6 +230,7 @@ class Level:
 
         for coin in self.coins.sprites():
             if coin.rect.colliderect(player):
+                pygame.mixer.Sound.play(self.coin_sound)
                 player.coin_obtained()
                 self.coins.remove(coin)
 
@@ -232,6 +239,7 @@ class Level:
 
         for powerup in self.powerups.sprites():
             if powerup.rect.colliderect(player):
+                pygame.mixer.Sound.play(self.powerup_sound)
                 self.active_powerup = powerup.value
                 self.powerup_duration = 1000
                 self.powerups.remove(powerup)
