@@ -19,6 +19,9 @@ class Player(pygame.sprite.Sprite):
         self.jump_speed = config.PLAYER_JUMP_SPEED
         # vector storing where and how fast player wants to go
         self.direction = pygame.Vector2()
+        
+        self.jump_sound = pygame.mixer.Sound('assets/jump.mp3')
+        self.jump_sound.set_volume(0.5)
 
     def coin_obtained(self):
         self.score += 100
@@ -34,6 +37,7 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = 0
 
         if keys_state[pygame.K_SPACE] and self.can_jump:
+            pygame.mixer.Sound.play(self.jump_sound)
             self.direction.y = self.jump_speed
             self.can_jump = False
         self.direction.y += self.gravity
