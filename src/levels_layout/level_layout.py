@@ -1,10 +1,10 @@
 level_1= [
         'H                   H                           H       H                                               H',
         'H                   H                                   H                   W                           H',
-        'H   H               H                       H           H                   W             C             H',
+        'H   H               H                       H           H                   W                           H',
         'H         HH                                            H            C      H      H      H             H',
-        'H                              C        H                            H      H      H      H             H',
-        'H       C                      H                                                                        H',
+        'H                                       H                            H      H      H      H             H',
+        'H       C                      C                               C                                        H',
         'H                              H                        H      H                                   F    H',
         'H               U     B                B                H                 B                  B     F    H',
         'H P XXXXX    E  XXX      E               X        E     H                                          F    H',
