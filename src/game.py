@@ -21,9 +21,9 @@ class Game:
         self.start_screen = True
         self.pause = False
         
-        pygame.mixer.music.load('assets/theme.mp3')
-        pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.load('assets/theme.mp3')
+        # pygame.mixer.music.set_volume(0.5)
+        # pygame.mixer.music.play(-1)
 
     def update_level(self) -> bool:
         if self.cur_level >= len(LEVELS): return False
@@ -59,6 +59,10 @@ class Game:
             if self.start_screen:
                 self.show_start_screen()
                 continue
+
+            if self.level.status == 'warp':
+                    print('warp')
+                    continue
 
             if self.level.status == 'dead':
                 self.show_death_screen()

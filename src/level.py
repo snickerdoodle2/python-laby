@@ -20,9 +20,9 @@ class Level:
 
         self.font = pygame.font.Font('assets/Pixeboy.ttf', 32)
         
-        self.coin_sound = pygame.mixer.Sound('assets/coin.mp3')
-        self.death_sound = pygame.mixer.Sound('assets/death.mp3')
-        self.powerup_sound = pygame.mixer.Sound('assets/powerup.mp3')
+        # self.coin_sound = pygame.mixer.Sound('assets/coin.mp3')
+        # self.death_sound = pygame.mixer.Sound('assets/death.mp3')
+        # self.powerup_sound = pygame.mixer.Sound('assets/powerup.mp3')
 
     def setup(self, level_layout_data) -> None:
         # Set up the player
@@ -129,6 +129,7 @@ class Level:
         self.ground_enemies.update(self.world_x_shift * dt)
         self.flying_enemies.update(self.world_x_shift * dt)
         self.powerups.update(self.world_x_shift * dt)
+        self.warp_zone.update(self.world_x_shift * dt)
 
         # check colisions and set player's position
         self.handle_horizontal_collision(dt)
@@ -141,6 +142,8 @@ class Level:
         self.handle_powerup_collision()
         self.handle_powerup_duration()
 
+        self.handle_warp_zone()
+
         # handlin collisions with enemies
         self.handle_collision_with_ground_enemy()
         self.handle_collision_with_flying_enemy(dt)
@@ -152,6 +155,7 @@ class Level:
         self.ground_enemies.draw(self.display_surface)
         self.flying_enemies.draw(self.display_surface)
         self.powerups.draw(self.display_surface)
+        self.warp_zone.draw(self.display_surface)
 
         # draw the player
         self.player.draw(self.display_surface)
@@ -171,9 +175,16 @@ class Level:
         self.display_surface.blit(timer_text, (30, 30))
 
         if self.player.sprite.dead:
-            pygame.mixer.music.stop()
-            pygame.mixer.Sound.play(self.death_sound)
+            # pygame.mixer.music.stop()
+            # pygame.mixer.Sound.play(self.death_sound)
             self.status = 'dead'
+
+    def handle_warp_zone(self):
+        player = self.player.sprite
+        for block in self.warp_zone.sprites():
+            if block.rect.colliderect(player):
+                self.status = 'warp'
+
 
     # collision handler for enemies on ground
     def handle_ground_enemy_collision_with_objects(self, dt) -> None:
@@ -235,7 +246,7 @@ class Level:
 
         for coin in self.coins.sprites():
             if coin.rect.colliderect(player):
-                pygame.mixer.Sound.play(self.coin_sound)
+                # pygame.mixer.Sound.play(self.coin_sound)
                 player.coin_obtained()
                 self.coins.remove(coin)
 
@@ -244,7 +255,7 @@ class Level:
 
         for powerup in self.powerups.sprites():
             if powerup.rect.colliderect(player):
-                pygame.mixer.Sound.play(self.powerup_sound)
+                # pygame.mixer.Sound.play(self.powerup_sound)
                 self.active_powerup = powerup.value
                 self.powerup_duration = 1000
                 self.powerups.remove(powerup)
