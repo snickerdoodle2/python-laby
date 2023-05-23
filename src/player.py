@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.can_jump = True
         self.dead = False
 
-        self.score = 5000
+        self.score = 0000
         # TO UPDATE ^^^^
         # TODO: Settings file
         self.movement_speed = config.PLAYER_MOVEMENT_SPEED
