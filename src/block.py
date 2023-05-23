@@ -33,3 +33,13 @@ class Powerup(pygame.sprite.Sprite):
 
     def update(self, x_change) -> None:
         self.rect.x += x_change
+
+class Portal(pygame.sprite.Sprite):
+    def __init__(self, position):
+        super().__init__()
+        self.image = pygame.Surface((BLOCK_SIZE, BLOCK_SIZE))
+        self.image.fill('blueviolet')
+        self.rect = self.image.get_rect(topleft=position)
+        
+    def update(self, x_change) -> None:
+        self.rect.x += x_change

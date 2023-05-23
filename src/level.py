@@ -3,7 +3,7 @@ from config import BLOCK_SIZE, DISPLAY_WIDTH, PLAYER_MOVEMENT_SPEED, PLAYER_JUMP
 from enemy import GroundEnemy, FlyingEnemy
 from player import Player
 
-from block import Block, Coin, Powerup
+from block import Block, Coin, Powerup, Portal
 
 
 class Level:
@@ -36,6 +36,8 @@ class Level:
 
         # Add coins on map
         self.coins = pygame.sprite.Group()
+
+        self.warp_zone = pygame.sprite.Group()
 
         # Add enemies on map
         self.ground_enemies = pygame.sprite.Group()
@@ -90,6 +92,9 @@ class Level:
                 elif cell == 'U':
                     new_powerup = Powerup((x, y), BLOCK_SIZE, PLAYER_MOVEMENT_SPEED // 3)
                     self.powerups.add(new_powerup)
+                    
+                elif cell == 'W':
+                    self.warp_zone.add(Portal((x, y)))
 
     def set_screen_movement(self) -> None:
         player = self.player.sprite
