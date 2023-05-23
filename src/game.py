@@ -1,7 +1,8 @@
 import pygame, sys
 from level import Level
+from warp_level import WarpLevel
 import config
-from levels_layout.level_layout import LEVELS
+from levels_layout.level_layout import LEVELS, warp_level
 
 
 class Game:
@@ -61,8 +62,7 @@ class Game:
                 continue
 
             if self.level.status == 'warp':
-                    print('warp')
-                    continue
+                    self.level = WarpLevel(warp_level, self.screen)
 
             if self.level.status == 'dead':
                 self.show_death_screen()
@@ -77,6 +77,16 @@ class Game:
                 if not self.update_level():
                     self.show_winner_screen()
                     continue
+                
+            if self.level.status == '1':
+                self.cur_level = 0
+                self.update_level()
+            if self.level.status == '2':
+                self.cur_level = 1
+                self.update_level()
+            if self.level.status == '3':
+                self.cur_level = 2
+                self.update_level()
 
             dt = self.clock.tick(200) / 1000
             self.level.run(dt)

@@ -94,7 +94,7 @@ class Level:
                     self.powerups.add(new_powerup)
                     
                 elif cell == 'W':
-                    self.warp_zone.add(Portal((x, y)))
+                    self.warp_zone.add(Portal((x, y), 'blueviolet'))
 
     def set_screen_movement(self) -> None:
         player = self.player.sprite

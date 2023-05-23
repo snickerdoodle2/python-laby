@@ -38,14 +38,14 @@ level_3= [
 
 LEVELS = [level_1, level_2, level_3]
 
-warp_zone = [
+warp_level = [
         'H                                             H',
         'H                                             H',
         'H                                             H',
         'H                                             H',
         'H                                             H',
-        'H        1             2              3       H',
-        'H        1             2              3       H',
+        'H        1             222            3       H',
+        'H        1             222            3       H',
         'H       HHH          HHHHHHH         HHH      H',
         'H  P                                          H',	
         'HXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXH']
